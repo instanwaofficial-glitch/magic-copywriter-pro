@@ -1,9 +1,10 @@
+%%writefile app.py
 import streamlit as st
 import google.generativeai as genai
 
 # !!! Kunci Bisnis Anda (PASTIKAN SUDAH DIGANTI DENGAN DATA ASLI) !!!
 PASSWORD_BULAN_INI = "SAKTI30JUTA" 
-LINK_BELI = "https://link-pembelian-anda.com/belisekarang" 
+LINK_BELI = "https://wa.me/0855850621804" 
 # ---
 
 # --- KONFIGURASI HALAMAN ---
@@ -23,12 +24,10 @@ if akses_key == PASSWORD_BULAN_INI:
     # --- ISI APLIKASI (HANYA MUNCUL JIKA AKSES BENAR) ---
     
     st.subheader("🛠️ Konfigurasi AI (Admin)")
-    # Asumsi Anda menanggung biaya API dengan 1 Kunci Utama
     API_KEY_ADMIN = st.text_input("Masukkan Google API Key Anda", type="password", help="Kunci ini hanya terlihat oleh Anda/Admin.") 
     
     st.subheader("🎯 Strategi & Target")
     
-    # Fitur Baru: Memilih Kerangka Marketing
     framework = st.radio("Pilih Kerangka Copywriting", 
                          ["AIDA (Attention, Interest, Desire, Action)", 
                           "PAS (Problem, Agitate, Solve)"], 
@@ -55,36 +54,48 @@ if akses_key == PASSWORD_BULAN_INI:
         else:
             try:
                 genai.configure(api_key=API_KEY_ADMIN)
-                model = genai.GenerativeModel('gemini-2.5-flash')
+                model = genai.GenerativeModel('gemini-2.5-flash') # Model yang sudah terbukti berhasil
                 
-                # --- PROMPT LEBIH CANGGIH ---
+                # --- PROMPT AKHIR: COPY + SARAN STRATEGIS ---
                 prompt = f"""
-                Bertindaklah sebagai Copywriter Profesional yang ahli dalam kerangka {framework} dan psikologi penjualan.
-                Buatkan 3 variasi konten promosi yang sangat persuasif berdasarkan data berikut:
+                Bertindaklah sebagai Copywriter Profesional sekaligus Konsultan Pemasaran Digital.
+                Tugas Anda dibagi menjadi dua bagian:
                 
+                [BAGIAN 1: GENERASI COPY]
+                Buatkan 3 variasi konten promosi yang sangat persuasif berdasarkan data berikut:
                 - Kerangka: {framework}
                 - Masalah Utama: {pain_point}
                 - Produk: {nama_produk} ({deskripsi})
                 - Aksi yang diinginkan (CTA): {target_action}
                 - Target Platform: {platform}
                 
-                Gunakan gaya bahasa yang sesuai target pasar UMKM Indonesia, menyentuh emosi, dan langsung memicu klik/pembelian.
-                Berikan heading untuk setiap variasi: [Variasi 1], [Variasi 2], [Variasi 3].
+                [BAGIAN 2: SARAN STRATEGIS]
+                Berikan analisis singkat (maksimal 3 poin) mengenai potensi kelemahan atau peluang dari konten yang baru Anda buat, berdasarkan Masalah Utama dan Target Platform. Berikan saran bagaimana meningkatkan konversinya.
+
+                OUTPUT HARUS menggunakan format Markdown yang jelas untuk memisahkan kedua bagian:
+                
+                # Copywriting Hasil Generasi Strategis
+                [Tulis 3 variasi di sini]
+                
+                ---
+                
+                # Saran Strategi AI untuk Konversi
+                [Tulis 3 poin saran di sini]
                 """
                 # --- END PROMPT CANGGIH ---
                 
-                with st.spinner('Sedang meracik mantra penjualan Strategis...'):
+                with st.spinner('Sedang meracik strategi dan mantra penjualan...'):
                     response = model.generate_content(prompt)
-                    st.success("✅ Nih, Copywriting Strategis Kamu Siap!")
+                    st.success("✅ Nih, Copywriting dan Strategi Pemasaran kamu Siap!")
                     st.markdown(response.text)
                     
             except Exception as e:
-                st.error(f"Error: {e}. Cek API Key kamu bener gak?")
+                st.error(f"Error: {e}. Terjadi masalah saat memanggil AI. Coba masukkan API Key lagi.")
                 
 else:
     # --- PESAN JIKA AKSES SALAH/KOSONG ---
     st.error("🚫 Akses Ditolak. Ini adalah fitur premium.")
     st.subheader("Ingin Akses Premium? Beli Sekarang!")
     st.markdown(f"Untuk mendapatkan password bulanan, Anda harus membeli langganan. Klik link di bawah:")
-    st.markdown(f"[**🔥 Beli Akses Premium di SINI!**]({LINK_BELI})")
+    st.markdown(f"[**🔥 Beli Akses Premium di SINI!**](https://wa.me/0855850621804)")
     st.warning("Jika sudah beli dan password salah, hubungi CS.")

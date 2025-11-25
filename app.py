@@ -55,31 +55,31 @@ if akses_key == PASSWORD_BULAN_INI:
                 genai.configure(api_key=API_KEY_ADMIN)
                 model = genai.GenerativeModel('gemini-2.5-flash') # Model yang sudah terbukti berhasil
                 
-                # --- PROMPT AKHIR: COPY + SARAN STRATEGIS ---
+                # --- PROMPT AKHIR: COPY + SARAN STRATEGIS (Lebih Agresif) ---
                 prompt = f"""
-                Bertindaklah sebagai Copywriter Profesional sekaligus Konsultan Pemasaran Digital.
-                Tugas Anda dibagi menjadi dua bagian:
+                Anda adalah Konsultan Pemasaran Digital sekaligus Copywriter kelas dunia.
+                Tugas Anda SANGAT PENTING: menghasilkan konten promosi DAN saran strategis.
                 
-                [BAGIAN 1: GENERASI COPY]
-                Buatkan 3 variasi konten promosi yang sangat persuasif berdasarkan data berikut:
+                [DATA INPUT]
                 - Kerangka: {framework}
                 - Masalah Utama: {pain_point}
                 - Produk: {nama_produk} ({deskripsi})
                 - Aksi yang diinginkan (CTA): {target_action}
                 - Target Platform: {platform}
                 
-                [BAGIAN 2: SARAN STRATEGIS]
-                Berikan analisis singkat (maksimal 3 poin) mengenai potensi kelemahan atau peluang dari konten yang baru Anda buat, berdasarkan Masalah Utama dan Target Platform. Berikan saran bagaimana meningkatkan konversinya.
-
-                OUTPUT HARUS menggunakan format Markdown yang jelas untuk memisahkan kedua bagian:
+                [INSTRUKSI OUTPUT WAJIB]
+                1. Hasilkan 3 variasi konten promosi yang sangat persuasif (sesuai kerangka).
+                2. Hasilkan 3 poin analisis dan saran strategis bagaimana meningkatkan konversi dari konten di atas.
                 
-                # Copywriting Hasil Generasi Strategis
-                [Tulis 3 variasi di sini]
-                
+                FORMAT OUTPUT WAJIB HARUS SEPERTI INI (Gunakan Markdown Header):
+                                
+                ## 1. Hasil Generasi Copywriting (3 Variasi)
+                [Tulis 3 variasi di sini, gunakan emoji yang relevan]
+                                
                 ---
-                
-                # Saran Strategi AI untuk Konversi
-                [Tulis 3 poin saran di sini]
+                                
+                ## 2. Saran Strategi AI untuk Konversi (3 Poin)
+                [Tulis 3 poin analisis dan strategi di sini, jangan kosongkan bagian ini!]
                 """
                 # --- END PROMPT CANGGIH ---
                 

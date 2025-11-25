@@ -55,7 +55,7 @@ if akses_key == PASSWORD_BULAN_INI:
         else:
             try:
                 genai.configure(api_key=API_KEY_ADMIN)
-                model = genai.GenerativeModel('gemini-pro')
+                model = genai.GenerativeModel('gemini-2.5-flash')
                 
                 # --- PROMPT LEBIH CANGGIH ---
                 prompt = f"""
